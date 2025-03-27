@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - BiteRush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Add your styles here */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .cart-header {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .cart-item {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>BiteRush</span>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home nav-icon"></i>Home</a>
+            <a href="best_cuisines.html"><i class="fas fa-utensils nav-icon"></i>Best Cuisines</a>
+            <a href="best_restaurants.html"><i class="fas fa-star nav-icon"></i>Best Restaurants</a>
+            <a href="offers.html"><i class="fas fa-tag nav-icon"></i>Offers</a>
+            <a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart nav-icon"></i>Cart <span class="cart-count">0</span></a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="cart-header">Cart - <span id="restaurant-name"></span></div>
+        <div id="cart-items"></div>
+    </main>
+
+    <footer>
+        © 2023 BiteRush - Food Delivery
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // JavaScript to handle cart functionality
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const restaurantName = localStorage.getItem('restaurantName') || 'Your Restaurant';
+
+        document.getElementById('restaurant-name').innerText = restaurantName;
+
+        const cartItemsContainer = document.getElementById('cart-items');
+        cartItems.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'cart-item';
+            itemDiv.innerText = `${item.name} - ₹${item.price}`;
+            cartItemsContainer.appendChild(itemDiv);
+        });
+    </script>
+</body>
+</html>

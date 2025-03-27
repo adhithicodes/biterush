@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Restaurants - BiteRush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>BiteRush</span>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home nav-icon"></i>Home</a>
+            <a href="best_cuisines.html"><i class="fas fa-utensils nav-icon"></i>Best Cuisines</a>
+            <a href="best_restaurants.html"><i class="fas fa-star nav-icon"></i>Best Restaurants</a>
+            <a href="offers.html"><i class="fas fa-tag nav-icon"></i>Offers</a>
+            <a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart nav-icon"></i>Cart <span class="cart-count">0</span></a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="section">
+            <h2 class="section-title">Chinese Restaurants</h2>
+            <div class="restaurant-container">
+                <div class="restaurant-item" onclick="location.href='dev_international.html'">
+                    <img src="images/dev_international.jpg" alt="Dev International" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Dev International</h4>
+                        <p class="restaurant-description">A popular spot for authentic Chinese cuisine, known for its delicious noodles and dumplings.</p>
+                        <p class="restaurant-rating">4.3 ★</p>
+                        <p class="restaurant-address">Mohan Nagar, Nagpur</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="location.href='urban_cafe.html'">
+                    <img src="images/urban_cafe.jpg" alt="Urban Cafe" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Urban Cafe</h4>
+                        <p class="restaurant-description">A trendy cafe offering a fusion of Chinese and local flavors, perfect for casual dining.</p>
+                        <p class="restaurant-rating">4.4 ★</p>
+                        <p class="restaurant-address">MG Road, Indore</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2023 BiteRush - Food Delivery
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

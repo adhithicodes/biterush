@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Sai Nath - BiteRush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Additional Styles for Thikana Page */
+        body {
+            font-family: 'Poppins', sans-serif; /* Default font */
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #0077b6;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+
+        .nav-icon {
+            margin-right: 5px;
+        }
+
+        .cart-count {
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .restaurant-title {
+            text-align: center; /* Center the title */
+            font-family: 'Great Vibes', cursive; /* Fancy font for the title */
+            font-size: 36px; /* Increase font size */
+            margin-bottom: 10px; /* Space below the title */
+        }
+
+        .restaurant-info {
+            margin-bottom: 20px;
+        }
+
+        .restaurant-deals {
+            background: #0077b6; /* Darker blue shade */
+            color: white;
+            padding: 10px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 0 auto 20px; /* Center the deals section */
+            width: 100%; /* Stretch to full width */
+        }
+
+        .search-bar {
+            width: 60%; /* Adjust width to make it smaller */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin: 0 auto 20px; /* Center the search bar */
+            font-size: 16px;
+            transition: border 0.3s;
+            display: block; /* Add this to center the search bar */
+        }
+
+        .search-bar:focus {
+            border-color: #00b4d8;
+            outline: none;
+        }
+
+        .menu-title {
+            text-align: center; /* Center the menu title */
+            font-size: 28px; /* Adjust font size as needed */
+            margin: 20px 0; /* Space above and below the title */
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            padding: 10px; /* Padding for the container */
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            max-width: 600px; /* Set a max width for the container */
+            margin: 0 auto; /* Center the container */
+        }
+
+        .menu-item:hover {
+            transform: scale(1.02);
+        }
+
+        .menu-info {
+            flex: 1;
+            margin-right: 15px; /* Space between text and image */
+        }
+
+        .dish-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .dish-description {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .dish-image {
+            width: 150px; /* Adjust width as needed */
+            height: 120px; /* Adjust height as needed */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .add-to-cart {
+            background: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px; /* Smaller padding for a smaller button */
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+            margin-top: 10px; /* Space above the button */
+            width: fit-content; /* Prevent button from stretching */
+            align-self: center; /* Center the button */
+        }
+
+        .add-to-cart:hover {
+            background: #0091b5;
+        }
+
+        .restaurant-description {
+            margin-bottom: 10px; /* Space between description and rating */
+            font-size: 18px; /* Increase font size for description */
+            color: #333; /* Darker color for better readability */
+            text-align: center; /* Center the description */
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px; /* Start hidden off-screen */
+            width: 350px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1100;
+            padding: 20px;
+        }
+
+        .cart-sidebar.active {
+            right: 0; /* Slide in */
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .remove-item {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 3px 8px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .checkout-btn:hover {
+            background: #0091b5;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>BiteRush</span>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home nav-icon"></i>Home</a>
+            <a href="best_cuisines.html"><i class="fas fa-utensils nav-icon"></i>Best Cuisines</a>
+            <a href="best_restaurants.html"><i class="fas fa-star nav-icon"></i>Best Restaurants</a>
+            <a href="offers.html"><i class="fas fa-tag nav-icon"></i>Offers</a>
+            <a href="#" id="cart-link"><i class="fas fa-shopping-cart nav-icon"></i>Cart <span class="cart-count">0</span></a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="section">
+            <h2 class="restaurant-title">Hotel Sai Nath</h2>
+            <p class="restaurant-description">Authentic Maharashtrian cuisine featuring spicy curries, seafood specialties and traditional thali meals.</p>
+            <p class="restaurant-rating">Rating: 4.7 ★</p>
+            <div class="restaurant-deals">Deals for You: 10% off on all thali meals!</div>
+
+            <h3 class="menu-title">Menu</h3>
+            <input type="text" placeholder="Search for dishes..." class="search-bar">
+
+            <div class="menu-container">
+                <div class="menu-item">
+                    <div class="menu-info">
+                        <h4 class="dish-name">Puran Poli</h4>
+                        <p class="dish-description">Sweet flatbread stuffed with lentil and jaggery filling, served with ghee.</p>
+                        <button class="add-to-cart" data-name="Puran Poli" data-price="89">Add to Cart</button>
+                    </div>
+                    <img src="images/puran_poli.jpg" alt="Puran Poli" class="dish-image">
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-info">
+                        <h4 class="dish-name">Misal Pav</h4>
+                        <p class="dish-description">Spicy sprouted bean curry topped with farsan, served with bread rolls.</p>
+                        <button class="add-to-cart" data-name="Misal Pav" data-price="119">Add to Cart</button>
+                    </div>
+                    <img src="images/misal_pav.jpg" alt="Misal Pav" class="dish-image">
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-info">
+                        <h4 class="dish-name">Bombay Duck Fry</h4>
+                        <p class="dish-description">Crispy fried bombil fish with spicy coating, a Mumbai specialty.</p>
+                        <button class="add-to-cart" data-name="Bombay Duck Fry" data-price="199">Add to Cart</button>
+                    </div>
+                    <img src="images/bombay_duck.jpg" alt="Bombay Duck Fry" class="dish-image">
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-info">
+                        <h4 class="dish-name">Thali Peeth</h4>
+                        <p class="dish-description">Multigrain savory pancake made with rice, wheat and millet flour.</p>
+                        <button class="add-to-cart" data-name="Thali Peeth" data-price="79">Add to Cart</button>
+                    </div>
+                    <img src="images/thali_peeth.jpg" alt="Thali Peeth" class="dish-image">
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-info">
+                        <h4 class="dish-name">Prawns Koliwada</h4>
+                        <p class="dish-description">Spicy marinated prawns deep fried in chickpea flour batter.</p>
+                        <button class="add-to-cart" data-name="Prawns Koliwada" data-price="279">Add to Cart</button>
+                    </div>
+                    <img src="images/prawns_koliwada.jpg" alt="Prawns Koliwada" class="dish-image">
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-info">
+                        <h4 class="dish-name">Varan Bhaat</h4>
+                        <p class="dish-description">Simple comfort food - lentil soup with rice, served with ghee.</p>
+                        <button class="add-to-cart" data-name="Varan Bhaat" data-price="99">Add to Cart</button>
+                    </div>
+                    <img src="images/varan_bhaat.jpg" alt="Varan Bhaat" class="dish-image">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2023 BiteRush - Food Delivery
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here -->
+        </div>
+        <div class="cart-total">
+            <p>Total: <span id="cart-total-price">₹0</span></p>
+            <a href="http://localhost:3000/checkout.html" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalPrice = document.getElementById('cart-total-price');
+            const cartCount = document.querySelector('.cart-count');
+            const cartLink = document.getElementById('cart-link');
+            
+            // Load cart from localStorage or initialize empty array
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            // Update cart display initially
+            updateCart();
+            
+            // Function to update the cart display
+            function updateCart() {
+                cartItemsContainer.innerHTML = '';  // Clear previous items
+                
+                let total = 0;
+                
+                if (cartItems.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+                } else {
+                    // Display each item with quantity and remove button
+                    cartItems.forEach((item, index) => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'cart-item';
+                        
+                        itemDiv.innerHTML = `
+                            <div class="cart-item-info">
+                                ${item.name} x ${item.quantity} - ₹${item.price * item.quantity}
+                            </div>
+                            <div class="cart-item-actions">
+                                <button class="remove-item" data-index="${index}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        cartItemsContainer.appendChild(itemDiv);
+                        total += item.price * item.quantity;
+                    });
+                }
+                
+                // Update the total price and cart count
+                cartTotalPrice.textContent = `₹${total}`;
+                cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+                
+                // Save to localStorage
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                
+                // Attach event listeners to remove buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        removeItemFromCart(index);
+                    });
+                });
+            }
+            
+            // Function to add an item to the cart
+            function addItemToCart(name, price) {
+                // Check if item already exists in cart
+                const existingItem = cartItems.find(item => item.name === name);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cartItems.push({
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                cartSidebar.classList.add('active');
+            }
+            
+            // Function to remove an item from the cart
+            function removeItemFromCart(index) {
+                if (cartItems[index].quantity > 1) {
+                    cartItems[index].quantity -= 1;
+                } else {
+                    cartItems.splice(index, 1);
+                }
+                
+                updateCart();
+            }
+            
+            // Event listeners for Add to Cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const price = parseInt(this.getAttribute('data-price'));
+                    addItemToCart(name, price);
+                });
+            });
+            
+            // Event listener for cart link
+            cartLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                cartSidebar.classList.add('active');
+            });
+            
+            // Event listener for closing the cart
+            document.querySelector('.close-cart').addEventListener('click', function() {
+                cartSidebar.classList.remove('active');
+            });
+
+            // Save cart data before navigating to checkout
+            document.querySelector('.checkout-btn').addEventListener('click', function(e) {
+                if (cartItems.length === 0) {
+                    e.preventDefault();
+                    alert('Your cart is empty!');
+                    return;
+                }
+                localStorage.setItem('cartTotal', cartTotalPrice.textContent);
+            });
+        });
+    </script>
+</body>
+</html>

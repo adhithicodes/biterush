@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteRush - Food Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .header {
+            background-color: #0077b6;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-icon {
+            margin-right: 5px;
+        }
+
+        .cart-count {
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #0077b6;
+        }
+
+        /* Categories Section */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .category-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Restaurants Section */
+        .restaurant-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .restaurant-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .restaurant-item:hover {
+            transform: scale(1.03);
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .restaurant-info {
+            padding: 15px;
+        }
+
+        .restaurant-name {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+
+        .restaurant-rating {
+            color: #ffc107;
+            margin: 0 0 5px 0;
+            font-weight: bold;
+        }
+
+        .restaurant-address, .restaurant-time {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Best Sellers Section */
+        .items-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .item-info {
+            padding: 15px;
+        }
+
+        .item-name {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+
+        .item-price {
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .add-to-cart {
+            background: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #0091b5;
+        }
+
+        /* Offers Section */
+        .offer-card {
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            border-left: 5px solid #0077b6;
+        }
+
+        .offer-heading {
+            margin-top: 0;
+            color: #0077b6;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1100;
+            padding: 20px;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .remove-item {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 3px 8px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #0091b5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f8f9fa;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #0077b6;
+            font-size: 24px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #005b8c;
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>BiteRush</span>
+        </div>
+        <nav>
+            <a href="#home"><i class="fas fa-home nav-icon"></i>Home</a>
+            <a href="#best-cuisines"><i class="fas fa-utensils nav-icon"></i>Best Cuisines Near Me</a>
+            <a href="#best-restaurants"><i class="fas fa-star nav-icon"></i>Best Restaurants Near You</a>
+            <a href="#offers"><i class="fas fa-tag nav-icon"></i>Offers</a>
+            <a href="#" id="cart-link"><i class="fas fa-shopping-cart nav-icon"></i>Cart <span class="cart-count">0</span></a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Best Cuisines Near Me Section -->
+        <section id="best-cuisines" class="section">
+            <h2 class="section-title">Best Cuisines Near Me</h2>
+            <div class="categories">
+                <div class="category-item" onclick="window.location.href='chinese_restaurants.html'">
+                    <img src="images/chinese.jpg" alt="Chinese" class="category-image">
+                    <p>Chinese</p>
+                </div>
+                <div class="category-item" onclick="window.location.href='indian_restaurants.html'">
+                    <img src="images/indian.jpg" alt="Indian" class="category-image">
+                    <p>Indian</p>
+                </div>
+                <div class="category-item" onclick="window.location.href='north_indian_restaurants.html'">
+                    <img src="images/north_indian.jpg" alt="North Indian" class="category-image">
+                    <p>North Indian</p>
+                </div>
+                <div class="category-item" onclick="window.location.href='south_indian_restaurants.html'">
+                    <img src="images/south_indian.jpg" alt="South Indian" class="category-image">
+                    <p>South Indian</p>
+                </div>
+             
+               
+            </div>
+        </section>
+
+        <!-- Best Restaurants Near You Section -->
+        <section id="best-restaurants" class="section">
+            <h2 class="section-title">Best Restaurants Near You</h2>
+            <div class="restaurant-container">
+                <div class="restaurant-item" onclick="window.location.href='thikana.html'">
+                    <img src="images/thikana.jpg" alt="Thikana" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Thikana</h4>
+                        <p class="restaurant-rating">4.2 ★</p>
+                        <p class="restaurant-address">Adarsh Nagar, Chhindwara</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="window.location.href='urban_cafe.html'">
+                    <img src="images/urban_cafe.jpg" alt="Urban Cafe" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Urban Cafe</h4>
+                        <p class="restaurant-rating">4.4 ★</p>
+                        <p class="restaurant-address">MG Road, Indore</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="window.location.href='dev_international.html'">
+                    <img src="images/dev_international.jpg" alt="Dev International" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Dev International</h4>
+                        <p class="restaurant-rating">4.3 ★</p>
+                        <p class="restaurant-address">Mohan Nagar, Nagpur</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="window.location.href='indian_coffee_house.html'">
+                    <img src="images/indian_coffee_house.jpg" alt="Indian Coffee House" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Indian Coffee House</h4>
+                        <p class="restaurant-rating">4.5 ★</p>
+                        <p class="restaurant-address">Khojri Chowk, Bhopal</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="window.location.href='adil_hotel.html'">
+                    <img src="images/adil_hotel.jpg" alt="Adil Hotel" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Adil Hotel</h4>
+                        <p class="restaurant-rating">4.1 ★</p>
+                        <p class="restaurant-address">Chhindwara</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="window.location.href='hotel_sai_nath.html'">
+                    <img src="images/hotel_sai_nath.jpg" alt="Hotel Sai Nath" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Hotel Sai Nath</h4>
+                        <p class="restaurant-rating">4.3 ★</p>
+                        <p class="restaurant-address">Gandhi Nagar, Jabalpur</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Sellers Section -->
+        <section class="section">
+            <h2 class="section-title">Best Sellers</h2>
+            <div class="items-container">
+                <div class="item-card">
+                    <img src="images/butter_chicken.jpg" class="item-img" alt="Butter Chicken">
+                    <div class="item-info">
+                        <h4 class="item-name">Butter Chicken</h4>
+                        <p class="item-price">₹249</p>
+                        <button class="add-to-cart" data-name="Butter Chicken" data-price="249">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/hyderabadi_biryani.jpg" class="item-img" alt="Hyderabadi Biryani">
+                    <div class="item-info">
+                        <h4 class="item-name">Hyderabadi Biryani</h4>
+                        <p class="item-price">₹199</p>
+                        <button class="add-to-cart" data-name="Hyderabadi Biryani" data-price="199">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/paneer_tikka.jpg" class="item-img" alt="Paneer Tikka">
+                    <div class="item-info">
+                        <h4 class="item-name">Paneer Tikka</h4>
+                        <p class="item-price">₹179</p>
+                        <button class="add-to-cart" data-name="Paneer Tikka" data-price="179">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/masala_dosa.jpg" class="item-img" alt="Masala Dosa">
+                    <div class="item-info">
+                        <h4 class="item-name">Masala Dosa</h4>
+                        <p class="item-price">₹129</p>
+                        <button class="add-to-cart" data-name="Masala Dosa" data-price="129">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/pizza.jpg" class="item-img" alt="Pizza">
+                    <div class="item-info">
+                        <h4 class="item-name">Pizza</h4>
+                        <p class="item-price">₹299</p>
+                        <button class="add-to-cart" data-name="Pizza" data-price="299">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/spring_rolls.jpg" class="item-img" alt="Spring Rolls">
+                    <div class="item-info">
+                        <h4 class="item-name">Spring Rolls</h4>
+                        <p class="item-price">₹149</p>
+                        <button class="add-to-cart" data-name="Spring Rolls" data-price="149">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/ice_cream.jpg" class="item-img" alt="Ice Cream">
+                    <div class="item-info">
+                        <h4 class="item-name">Ice Cream</h4>
+                        <p class="item-price">₹99</p>
+                        <button class="add-to-cart" data-name="Ice Cream" data-price="99">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <img src="images/mojitos.jpg" class="item-img" alt="Mojitos">
+                    <div class="item-info">
+                        <h4 class="item-name">Mojitos</h4>
+                        <p class="item-price">₹149</p>
+                        <button class="add-to-cart" data-name="Mojitos" data-price="149">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Offers Section -->
+        <section id="offers" class="section">
+            <h2 class="section-title">Special Offers</h2>
+            <div class="offer-card">
+                <h3 class="offer-heading">₹150 OFF ABOVE ₹199</h3>
+                <div class="restaurant-card" onclick="window.location.href='thikana.html'">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Thikana</h4>
+                        <p class="restaurant-rating">4.2 ★</p>
+                        <p class="restaurant-time">40-45 mins</p>
+                        <p class="restaurant-location">Indian, Adarsh Nagar Chhindwara</p>
+                    </div>
+                </div>
+                <div class="restaurant-card" onclick="window.location.href='urban_cafe.html'">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Urban Cafe</h4>
+                        <p class="restaurant-rating">4.4 ★</p>
+                        <p class="restaurant-time">45-50 mins</p>
+                        <p class="restaurant-location">Snacks, Pizzas, Pastas, Fast Food, Chhindwara City</p>
+                    </div>
+                </div>
+            </div>
+            <div class="offer-card">
+                <h3 class="offer-heading">₹150 OFF ABOVE ₹399</h3>
+                <div class="restaurant-card" onclick="window.location.href='dev_international.html'">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Dev International</h4>
+                        <p class="restaurant-rating">4.3 ★</p>
+                        <p class="restaurant-time">55-60 mins</p>
+                        <p class="restaurant-location">North Indian, Chinese, Fast Food, Mohan Nagar</p>
+                    </div>
+                </div>
+                <div class="restaurant-card" onclick="window.location.href='indian_coffee_house.html'">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Indian Coffee House</h4>
+                        <p class="restaurant-rating">4.5 ★</p>
+                        <p class="restaurant-time">35-40 mins</p>
+                        <p class="restaurant-location">South Indian, Chinese, Fast Food, Khojri Chowk</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here -->
+        </div>
+        <div class="cart-total">
+            <p>Total: <span id="cart-total-price">₹0</span></p>
+            <button class="checkout-btn" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/biterush" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/biterush" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com/biterush" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/biterush" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <p class="copyright">© 2025 BiteRush - Food Delivery. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalPrice = document.getElementById('cart-total-price');
+            const cartCount = document.querySelector('.cart-count');
+            const cartLink = document.getElementById('cart-link');
+            
+            // Load cart from localStorage or initialize empty array
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            // Update cart display initially
+            updateCart();
+            
+            // Function to update the cart display
+            function updateCart() {
+                cartItemsContainer.innerHTML = '';  // Clear previous items
+                
+                let total = 0;
+                
+                if (cartItems.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+                } else {
+                    // Display each item with quantity and remove button
+                    cartItems.forEach((item, index) => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'cart-item';
+                        
+                        itemDiv.innerHTML = `
+                            <div class="cart-item-info">
+                                ${item.name} x ${item.quantity} - ₹${item.price * item.quantity}
+                            </div>
+                            <div class="cart-item-actions">
+                                <button class="remove-item" data-index="${index}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        cartItemsContainer.appendChild(itemDiv);
+                        total += item.price * item.quantity;
+                    });
+                }
+                
+                // Update the total price and cart count
+                cartTotalPrice.textContent = `₹${total}`;
+                cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+                
+                // Save to localStorage
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                
+                // Attach event listeners to remove buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        removeItemFromCart(index);
+                    });
+                });
+            }
+            
+            // Function to add an item to the cart
+            function addItemToCart(name, price) {
+                // Check if item already exists in cart
+                const existingItem = cartItems.find(item => item.name === name);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cartItems.push({
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                cartSidebar.classList.add('active');
+            }
+            
+            // Function to remove an item from the cart
+            function removeItemFromCart(index) {
+                if (cartItems[index].quantity > 1) {
+                    cartItems[index].quantity -= 1;
+                } else {
+                    cartItems.splice(index, 1);
+                }
+                
+                updateCart();
+            }
+            
+            // Event listeners for Add to Cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const price = parseInt(this.getAttribute('data-price'));
+                    addItemToCart(name, price);
+                });
+            });
+            
+            // Event listener for cart link
+            cartLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                cartSidebar.classList.add('active');
+            });
+            
+            // Event listener for closing the cart
+            document.querySelector('.close-cart').addEventListener('click', function() {
+                cartSidebar.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

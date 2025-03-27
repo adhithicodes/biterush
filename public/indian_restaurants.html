@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Restaurants - BiteRush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>BiteRush</span>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home nav-icon"></i>Home</a>
+            <a href="best_cuisines.html"><i class="fas fa-utensils nav-icon"></i>Best Cuisines</a>
+            <a href="best_restaurants.html"><i class="fas fa-star nav-icon"></i>Best Restaurants</a>
+            <a href="offers.html"><i class="fas fa-tag nav-icon"></i>Offers</a>
+            <a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart nav-icon"></i>Cart <span class="cart-count">0</span></a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="section">
+            <h2 class="section-title">Indian Restaurants</h2>
+            <div class="restaurant-container">
+                <div class="restaurant-item" onclick="location.href='thikana.html'">
+                    <img src="images/thikana.jpg" alt="Thikana" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Thikana</h4>
+                        <p class="restaurant-description">Famous for its traditional Indian dishes and cozy ambiance.</p>
+                        <p class="restaurant-rating">4.2 ★</p>
+                        <p class="restaurant-address">Adarsh Nagar, Chhindwara</p>
+                    </div>
+                </div>
+                <div class="restaurant-item" onclick="location.href='adil_hotel.html'">
+                    <img src="images/adil_hotel.jpg" alt="Adil Hotel" class="restaurant-image">
+                    <div class="restaurant-info">
+                        <h4 class="restaurant-name">Adil Hotel</h4>
+                        <p class="restaurant-description">A local favorite for its North Indian cuisine and friendly service.</p>
+                        <p class="restaurant-rating">4.1 ★</p>
+                        <p class="restaurant-address">Chhindwara</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2023 BiteRush - Food Delivery
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

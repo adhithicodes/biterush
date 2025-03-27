@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "Domino's Pizza",
+        "cuisine": "Italian",
+        "rating": 4.5,
+        "image": "https://via.placeholder.com/300x180"
+    },
+    {
+        "id": 2,
+        "name": "McDonald's",
+        "cuisine": "Fast Food",
+        "rating": 4.2,
+        "image": "https://via.placeholder.com/300x180"
+    },
+    {
+        "id": 3,
+        "name": "Subway",
+        "cuisine": "Healthy",
+        "rating": 4.3,
+        "image": "https://via.placeholder.com/300x180"
+    }
+]
